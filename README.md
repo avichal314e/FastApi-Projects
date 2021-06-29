@@ -1,0 +1,1 @@
+# FastAPI Projects done as part of 314e Training
