@@ -1,4 +1,3 @@
-# Part 1 - Create a Python Rest API endpoint
 # Create a CRUD Rest API endpoint for Healthcare Provider directory. Use Python - FastAPI for building the Rest APIs.
 # Store the data as an in-memory Dictionary.
 
