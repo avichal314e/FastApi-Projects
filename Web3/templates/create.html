@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthCare Providers</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="shortcut icon" href="../static/images/314elogo.png" type="image/x-icon">
+</head>
+
+<body>
+    <section class="title-bar">
+        <input type="radio" name="choice" value="index.html" onclick="display_choice()">Home
+        <input type="radio" name="choice" value="providers.html" onclick="display_choice()">All Providers
+        <input type="radio" name="choice" value="provider.html" onclick="display_choice()">Search
+        <input type="radio" name="choice" value="create.html" onclick="display_choice()" checked>Create
+        <input type="radio" name="choice" value="delete.html" onclick="display_choice()">Delete
+        <input type="radio" name="choice" value="update.html" onclick="display_choice()">Update
+    </section>
+    <br>
+    <h1 class="pagetitles" style="text-align: center; color: #104c91">
+        Create Provider</h1>
+
+    <form class="row  g-3 p-3 bg-light" style="border: solid rgb(128, 232, 240); margin: 0 300px"
+        action="/fe/create_provider" , method="GET">
+        <div class="col-md-6">
+            <label class="form-label">Name<sup class="star">*</sup> </label>
+            <input type="text" class="form-control" name="name" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Status<sup class="star">*</sup> </label>
+            <select name="active" class="form-select">
+                <option value="active" selected>Active</option>
+                <option value="inactive">Inactive</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Qualifications<sup class="star">*</sup> </label>
+            <input type="text" class="form-control" name="qualification" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Speciality<sup class="star">*</sup> </label>
+            <input type="text" class="form-control" name="speciality" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Phone<sup class="star">*</sup> </label>
+            <input type="text" class="form-control" name="phone" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Department</label>
+            <input type="text" class="form-control" name="department">
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Organization<sup class="star">*</sup> </label>
+            <input type="text" class="form-control" name="organization" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Location</label>
+            <input type="text" class="form-control" name="location">
+        </div>
+        <div class="col-md-12">
+            <label class="form-label">Address<sup class="star">*</sup> </label>
+            <input type="text" class="form-control" name="address" required>
+
+        </div>
+        {% if message %}
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3" style="margin-left: 325px;">Create Provider</button>
+        </div>
+        <div class="alert alert-success" role="alert"
+            style="width: 32%; height: 38px; padding: 7px; margin-left: 30px;">
+            {{message}}
+        </div>
+        {% else %}
+        <div class="col-md-12">
+            <button type="submit" style="margin: 0 325px;" class="btn btn-primary">Create Provider</button>
+        </div>
+        {% endif %}
+    </form>
+    <br>
+    <br>
+    <br>
+    <div class="creditSection">
+        <div class="col-md-12">
+            <p style="text-align: center; color: blue;">Designed with <span class="heart">&#10084;&#65039;</span> by <a
+                    href="https://github.com/avichalsri" target="_blank" rel="noopener" style="color: blue;"> Avichal
+                    Srivastava</a></p>
+
+        </div>
+    </div>
+
+
+
+    <script src="../static/provider.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

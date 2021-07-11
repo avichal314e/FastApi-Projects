@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+}
+
+
+.title-bar {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.title-bar input {
+    margin-left: 20px;
+}
+
+body {
+    background-color: white;
+  }
+
+a {
+    text-decoration: none;
+}
+
+.star {
+    color: red;
+}

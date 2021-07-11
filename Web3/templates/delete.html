@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthCare Providers</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="shortcut icon" href="../static/images/314elogo.png" type="image/x-icon">
+</head>
+
+<body>
+    <section class="title-bar">
+        <input type="radio" name="choice" value="index.html" onclick="display_choice()">Home
+        <input type="radio" name="choice" value="providers.html" onclick="display_choice()">All Providers
+        <input type="radio" name="choice" value="provider.html" onclick="display_choice()">Search
+        <input type="radio" name="choice" value="create.html" onclick="display_choice()">Create
+        <input type="radio" name="choice" value="delete.html" onclick="display_choice()" checked>Delete
+        <input type="radio" name="choice" value="update.html" onclick="display_choice()">Update
+    </section>
+    <br>
+    <h1 class="pagetitles" style="text-align: center; color: #104c91">
+        Delete Provider</h1>
+    <form class="row g-3" style="margin: 8px" action="/fe/delete_providers" method="GET">
+        <div class="col-auto">
+            <select name="field" class="form-select" required>
+                <option value="" selected hidden>Select Field</option>
+                <option value="providerID">ProviderID</option>
+                <option value="active">Status</option>
+                <option value="name">Name</option>
+                <option value="qualification">Qualification</option>
+                <option value="speciality">Speciality</option>
+                <option value="phone">Phone</option>
+                <option value="department">Department</option>
+                <option value="organization">Organization</option>
+                <option value="location">Location</option>
+                <option value="address">Address</option>
+
+            </select>
+        </div>
+        <div class="col-auto">
+            <input name="value" type="text" class="form-control" placeholder="Value">
+        </div>
+        <div class="col-auto">
+            <button value="preview" name="button" type="submit" class="btn btn-primary mb-3">Preview</button>
+        </div>
+        <div class="col-auto">
+            <button value="submit" name="button" type="submit" class="btn btn-danger mb-3">Delete Records</button>
+        </div>
+        {% if message %}
+        <div class="alert alert-success" role="alert"
+            style="width: 18%; height: 38px; padding: 7px; margin-left: 30px;">
+            {{message}}
+        </div>
+        {% endif %}
+    </form>
+
+    {% if data %}
+    <table class=" table table-dark table-hover" style="margin: 0 15px; width: 98%;">
+        <thead>
+            <tr>
+                <th scope="col">providerID</th>
+                <th scope="col">Status</th>
+                <th scope="col">Name</th>
+                <th scope="col">Qualifications</th>
+                <th scope="col">Speciality</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Department</th>
+                <th scope="col">Organization</th>
+                <th scope="col">Location</th>
+                <th scope="col">Address</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for ele in data %}
+            <tr>
+                <td>{{data[ele].providerID}}</td>
+                <td>{{data[ele].active}}</td>
+                <td>{{data[ele].name}}</td>
+                <td>{{data[ele].qualification}}</td>
+                <td>{{data[ele].speciality}}</td>
+                <td>{{data[ele].phone}}</td>
+                <td>{{data[ele].department}}</td>
+                <td>{{data[ele].organization}}</td>
+                <td>{{data[ele].location}}</td>
+                <td>{{data[ele].address}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <h3 style="margin-left: 15px;">No Records Available!!</h3>
+    <img style="margin: 0 325px" src="../static/images/notfound.jpg" alt="Some error image">
+    {% endif %}
+
+
+
+
+    <div class="creditSection" style="position: fixed; bottom: 0;">
+        <div class="col-md-12" style="margin: 0 300px;">
+
+            <p style="text-align: center; color: blue;">Designed with <span class="heart">&#10084;&#65039;</span> by <a
+                    href="https://github.com/avichalsri" target="_blank" rel="noopener" style="color: blue;">Avichal
+                    Srivastava</a></p>
+
+        </div>
+    </div>
+
+    <script src="../static/provider.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
