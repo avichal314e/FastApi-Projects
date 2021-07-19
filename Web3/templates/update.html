@@ -30,7 +30,7 @@
         action="/fe/update_provider" method="GET">
         <div class="col-md-12">
             <label class="form-label">Provider<sup class="star">*</sup> </label>
-            <select name="providerID" class="form-select" required>
+            <select name="id" class="form-select" required>
                 <option value="" selected hidden>Select Provider</option>
                 {% for ele in data %}
                 <option value="{{data[ele].providerID}}">{{data[ele].name}}</option>

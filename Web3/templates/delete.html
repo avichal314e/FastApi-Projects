@@ -41,9 +41,16 @@
 
             </select>
         </div>
+        {% if value %}
+        <div class="col-auto">
+            <input name="value" type="text" class="form-control" placeholder="Value" value="{{value}}">
+        </div>
+        {% else %}
         <div class="col-auto">
             <input name="value" type="text" class="form-control" placeholder="Value">
         </div>
+
+        {% endif %}
         <div class="col-auto">
             <button value="preview" name="button" type="submit" class="btn btn-primary mb-3">Preview</button>
         </div>

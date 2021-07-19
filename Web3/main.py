@@ -89,85 +89,16 @@ def get_uuid(param: str, value: str):
     return results
 
 
-@app.get('/providers')
-def get_providers():
-    return [db[uuid] for uuid in db.keys()]
-
-
 @app.get("/")
 async def home():
     response = RedirectResponse(url='/pages/index.html')
     return response
 
 
-@app.get('/get_provider/{field}={value}')
-def get_provider(field: str, value: str):
-    entries = get_uuid(field, value)
-    results = [db[entry] for entry in entries]
-    return (results if results else [])
-
-
-@app.put('/create_provider')
-def create_provider(provider: Provider):
-    pro_uuid = str(uuid.uuid4())
-    db[pro_uuid] = provider.dict()
-    db[pro_uuid]['providerID'] = pro_uuid
-    return db[pro_uuid]
-
-
-@app.delete('/delete_provider/{field}={value}')
-def delete_provider(field: str, value: str):
-    entries = get_uuid(field, value)
-    results = []
-    for entry in entries:
-        results.append(db[entry])
-        del db[entry]
-    return (results if results else [])
-
-
-@ app.post('/update_provider/{id}')
-def update_provider(id: str, active=None, name=None, qualification=None, speciality=None, phone=None, department=None, organization=None, location=None, address=None):
-    if(id in db.keys()):
-        try:
-            if(active is not None):
-                if(active == 'active'):
-                    db[id]['active'] = status.active
-                elif(active == 'inactive'):
-                    db[id]['active'] = status.inactive
-        except:
-            return "Invalid Active Status!"
-
-        db[id]['name'] = (
-            name if name is not None else db[id]['name'])
-
-        db[id]['qualification'] = (
-            qualification if qualification is not None else db[id]['qualification'])
-
-        db[id]['speciality'] = (
-            speciality if speciality is not None else db[id]['speciality'])
-
-        db[id]['phone'] = (
-            phone if phone is not None else db[id]['phone'])
-
-        db[id]['department'] = (
-            department if department is not None else db[id]['department'])
-
-        db[id]['organization'] = (
-            organization if organization is not None else db[id]['organization'])
-
-        db[id]['location'] = (
-            location if location is not None else db[id]['location'])
-
-        db[id]['address'] = (
-            address if address is not None else db[id]['address'])
-        return "SUCCESS!! Provider Details Updated."
-    else:
-        return "Provider not found!!"
-
-
 @app.get("/fe/get_providers", response_class=HTMLResponse)
 async def fe_get_providers(request: Request, field, value):
-    results = get_provider(field, value)
+    entries = get_uuid(field, value)
+    results = [db[entry] for entry in entries]
     results_dict = {}
     for ele in results:
         results_dict[ele['providerID']] = ele
@@ -193,7 +124,9 @@ async def fe_create_providers(request: Request, name, active, qualification, spe
     new_pro.address = address
     new_pro.location = location
     new_pro.department = department
-    create_provider(new_pro)
+    pro_uuid = str(uuid.uuid4())
+    db[pro_uuid] = new_pro.dict()
+    db[pro_uuid]['providerID'] = pro_uuid
     return templates.TemplateResponse("create.html", {
         "request": request,
         "data": db,
@@ -202,35 +135,66 @@ async def fe_create_providers(request: Request, name, active, qualification, spe
 
 
 @app.get("/fe/update_provider", response_class=HTMLResponse)
-async def fe_update_providers(request: Request, providerID, name, active, qualification, speciality, phone, department, organization, location, address):
-    name = None if name == "" else name
-    active = None if active == "" else active
-    qualification = None if qualification == "" else qualification
-    speciality = None if speciality == "" else speciality
-    phone = None if phone == "" else phone
-    organization = None if organization == "" else organization
-    address = None if address == "" else address
-    location = None if location == "" else location
-    department = None if department == "" else department
-    update_provider(providerID, active, name, qualification, speciality,
-                    phone, department, organization, location, address)
-    return templates.TemplateResponse("update.html", {
-        "request": request,
-        "data": db,
-        "message": "Provider Updated Successfully!!"
-    })
+async def fe_update_providers(request: Request, id, name, active, qualification, speciality, phone, department, organization, location, address):
+    if(id in db.keys()):
+        try:
+            if(active is not None):
+                if(active == 'active'):
+                    db[id]['active'] = status.active
+                elif(active == 'inactive'):
+                    db[id]['active'] = status.inactive
+        except:
+            return "Invalid Active Status!"
+
+        db[id]['name'] = (
+            name if name != "" else db[id]['name'])
+
+        db[id]['qualification'] = (
+            qualification if qualification != "" else db[id]['qualification'])
+
+        db[id]['speciality'] = (
+            speciality if speciality != "" else db[id]['speciality'])
+
+        db[id]['phone'] = (
+            phone if phone != "" else db[id]['phone'])
+
+        db[id]['department'] = (
+            department if department != "" else db[id]['department'])
+
+        db[id]['organization'] = (
+            organization if organization != "" else db[id]['organization'])
+
+        db[id]['location'] = (
+            location if location != "" else db[id]['location'])
+
+        db[id]['address'] = (
+            address if address != "" else db[id]['address'])
+        return templates.TemplateResponse("update.html", {
+            "request": request,
+            "data": db,
+            "message": "Provider Updated Successfully!!"
+        })
+    else:
+        return templates.TemplateResponse("update.html", {
+            "request": request,
+            "data": db,
+            "message": "Provider Not Found!"
+        })
 
 
 @app.get("/fe/delete_providers", response_class=HTMLResponse)
 async def fe_delete_providers(request: Request, field, value, button):
     if(button == "preview"):
-        results = get_provider(field, value)
+        entries = get_uuid(field, value)
+        results = [db[entry] for entry in entries]
         results_dict = {}
         for ele in results:
             results_dict[ele['providerID']] = ele
         return templates.TemplateResponse("delete.html", {
             "request": request,
             "data": results_dict,
+            "field": field,
+            "value": value
         })
     results = get_uuid(field, value)
     for ele in results:
