@@ -97,6 +97,9 @@ async def home():
 
 @app.get("/fe/get_providers", response_class=HTMLResponse)
 async def fe_get_providers(request: Request, field, value):
+    field = field.lower()
+    if(field == "providerid"):
+        field = "providerID"
     entries = get_uuid(field, value)
     results = [db[entry] for entry in entries]
     results_dict = {}
@@ -104,7 +107,9 @@ async def fe_get_providers(request: Request, field, value):
         results_dict[ele['providerID']] = ele
     return templates.TemplateResponse("provider.html", {
         "request": request,
-        "data": results_dict
+        "data": results_dict,
+        "field": field.capitalize(),
+        "value": value
     })
 
 
@@ -184,6 +189,9 @@ async def fe_update_providers(request: Request, id, name, active, qualification,
 
 @app.get("/fe/delete_providers", response_class=HTMLResponse)
 async def fe_delete_providers(request: Request, field, value, button):
+    field = field.lower()
+    if(field == "providerid"):
+        field = "providerID"
     if(button == "preview"):
         entries = get_uuid(field, value)
         results = [db[entry] for entry in entries]
@@ -193,7 +201,7 @@ async def fe_delete_providers(request: Request, field, value, button):
         return templates.TemplateResponse("delete.html", {
             "request": request,
             "data": results_dict,
-            "field": field,
+            "field": field.capitalize(),
             "value": value
         })
     results = get_uuid(field, value)

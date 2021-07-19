@@ -30,9 +30,10 @@
     <form class="row g-3" style="margin: 0 7px" action="/fe/get_providers" , method="GET">
         <div class="col-auto">
             <select name="field" class="form-select" required>
-                <option value="" selected hidden>Select Field</option>
+                {% if field %}
+                <option value="{{field}}" selected hidden>{{field}}</option>
                 <option value="providerID">ProviderID</option>
-                <option value="active">Status</option>
+                <option value="active">Active</option>
                 <option value="name">Name</option>
                 <option value="qualification">Qualification</option>
                 <option value="speciality">Speciality</option>
@@ -41,11 +42,23 @@
                 <option value="organization">Organization</option>
                 <option value="location">Location</option>
                 <option value="address">Address</option>
-
+                {% else %}
+                <option value="" selected hidden>Select Field</option>
+                <option value="providerID">ProviderID</option>
+                <option value="active">Active</option>
+                <option value="name">Name</option>
+                <option value="qualification">Qualification</option>
+                <option value="speciality">Speciality</option>
+                <option value="phone">Phone</option>
+                <option value="department">Department</option>
+                <option value="organization">Organization</option>
+                <option value="location">Location</option>
+                <option value="address">Address</option>
+                {% endif %}
             </select>
         </div>
         <div class="col-auto">
-            <input name="value" type="text" class="form-control" placeholder="Value">
+            <input name="value" type="text" class="form-control" placeholder="Value" value="{{value}}">
         </div>
         <div class="col-auto">
             <button type="submit" class="btn btn-primary mb-3">Search</button>
@@ -57,7 +70,7 @@
         <thead>
             <tr>
                 <th scope="col">providerID</th>
-                <th scope="col">Status</th>
+                <th scope="col">Active</th>
                 <th scope="col">Name</th>
                 <th scope="col">Qualifications</th>
                 <th scope="col">Speciality</th>

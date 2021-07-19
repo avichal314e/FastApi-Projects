@@ -27,9 +27,10 @@
     <form class="row g-3" style="margin: 8px" action="/fe/delete_providers" method="GET">
         <div class="col-auto">
             <select name="field" class="form-select" required>
-                <option value="" selected hidden>Select Field</option>
+                {% if field %}
+                <option value="{{field}}" selected hidden>{{field}}</option>
                 <option value="providerID">ProviderID</option>
-                <option value="active">Status</option>
+                <option value="active">Active</option>
                 <option value="name">Name</option>
                 <option value="qualification">Qualification</option>
                 <option value="speciality">Speciality</option>
@@ -38,7 +39,19 @@
                 <option value="organization">Organization</option>
                 <option value="location">Location</option>
                 <option value="address">Address</option>
-
+                {% else %}
+                <option value="" selected hidden>Select Field</option>
+                <option value="providerID">ProviderID</option>
+                <option value="active">Active</option>
+                <option value="name">Name</option>
+                <option value="qualification">Qualification</option>
+                <option value="speciality">Speciality</option>
+                <option value="phone">Phone</option>
+                <option value="department">Department</option>
+                <option value="organization">Organization</option>
+                <option value="location">Location</option>
+                <option value="address">Address</option>
+                {% endif %}
             </select>
         </div>
         {% if value %}
